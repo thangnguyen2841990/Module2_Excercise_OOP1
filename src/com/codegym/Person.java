@@ -1,25 +1,19 @@
 package com.codegym;
 
-public class Person extends Hotel {
+public class Person {
     private String name;
     private String birthday;
-    private String cmnd;
+    private String indentity;
 
     public Person() {
     }
 
-    public Person(String name, String birthday, String cmnd) {
+    public Person(String name, String birthday, String indentity) {
         this.name = name;
         this.birthday = birthday;
-        this.cmnd = cmnd;
+        this.indentity = indentity;
     }
 
-    public Person(int dateOfRental, String roomType, double roomRates, String name, String birthday, String cmnd) {
-        super(dateOfRental, roomType, roomRates);
-        this.name = name;
-        this.birthday = birthday;
-        this.cmnd = cmnd;
-    }
 
     public String getName() {
         return name;
@@ -37,16 +31,16 @@ public class Person extends Hotel {
         this.birthday = birthday;
     }
 
-    public String getCmnd() {
-        return cmnd;
+    public String getindentity() {
+        return indentity;
     }
 
-    public void setCmnd(String cmnd) {
-        this.cmnd = cmnd;
+    public void setindentity(String indentity) {
+        this.indentity = indentity;
     }
 
     @Override
     public String toString() {
-        return getName()+", "+getBirthday()+", CMND: "+getCmnd()+", "+super.toString();
+        return "Họ và tên: "+ getName()+", Ngày sinh: "+getBirthday()+", CMND: "+getindentity();
     }
 }

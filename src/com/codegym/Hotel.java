@@ -1,45 +1,57 @@
 package com.codegym;
 
 public class Hotel {
-    private int dateOfRental;
-    private String roomType;
-    private double roomRates;
+    private int rentsDay;
+    private String type;
+    private double price;
+    private Person person;
 
     public Hotel() {
     }
 
-    public Hotel(int dateOfRental, String roomType, double roomRates) {
-        this.dateOfRental = dateOfRental;
-        this.roomType = roomType;
-        this.roomRates = roomRates;
+    public Hotel(int rentsDay, String type, double price, Person person) {
+        this.rentsDay = rentsDay;
+        this.type = type;
+        this.price = price;
+        this.person = person;
     }
 
-    public int getDateOfRental() {
-        return dateOfRental;
+    public int getRentsDay() {
+        return rentsDay;
     }
 
-    public void setDateOfRental(int dateOfRental) {
-        this.dateOfRental = dateOfRental;
+    public void setRentsDay(int rentsDay) {
+        this.rentsDay = rentsDay;
     }
 
-    public String getRoomType() {
-        return roomType;
+    public String getType() {
+        return type;
     }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public double getRoomRates() {
-        return roomRates;
+    public double getPrice() {
+        return price;
     }
 
-    public void setRoomRates(double roomRates) {
-        this.roomRates = roomRates;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override
     public String toString() {
-        return "Số ngày trọ: "+ getDateOfRental()+", Loại phòng: "+ getRoomType()+", giá phòng: "+getRoomRates()+"/ngày";
+        return person.toString()+ ", Số ngày thuê trọ: " + rentsDay +
+                ", Loại phòng: " + type +
+                ", giá phòng: " + price;
     }
 }
