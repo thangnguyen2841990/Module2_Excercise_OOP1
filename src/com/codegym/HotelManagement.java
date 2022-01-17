@@ -1,72 +1,59 @@
 package com.codegym;
 
-public class HotelManagement {
-    Hotel[] customers = new Hotel[0];
+import java.util.ArrayList;
 
-    public HotelManagement(Hotel[] customers) {
-        this.customers = customers;
-    }
+public class HotelManagement {
+    private ArrayList<Hotel> hotels;
 
     public HotelManagement() {
-
+        this.hotels = new ArrayList<>();
     }
 
-    public Hotel[] getcustomers() {
-        return customers;
+    public HotelManagement(ArrayList<Hotel> hotels) {
+        this.hotels = hotels;
     }
 
-    public void setcustomers(Hotel[] customers) {
-        this.customers = customers;
+    public ArrayList<Hotel> getHotels() {
+        return hotels;
     }
 
-    public int size() {
-        return this.customers.length;
+    public void setHotels(ArrayList<Hotel> hotels) {
+        this.hotels = hotels;
     }
 
-    public void displayAllCustomer() {
-        for (int i = 0; i < customers.length; i++) {
-            System.out.println((i + 1) + ". " + customers[i]);
+    //thêm khách thuê phòng
+    public void addNewHotel(Hotel newHotel) {
+        hotels.add(newHotel);
+    }
+
+    //hiển thị toàn bộ khách thuê phòng
+    public void displayAllHotels() {
+        for (int i = 0; i < hotels.size(); i++) {
+            System.out.println((i + 1) + ". " + hotels.get(i));
         }
     }
-
-    public void addNewCustomer(int index, Hotel newCustomer) {
-        Hotel[] newCustomers = new Hotel[customers.length + 1];
-        for (int i = 0; i < newCustomers.length; i++) {
-            if (i < index) {
-                newCustomers[i] = customers[i];
-            } else if (i == index) {
-                newCustomers[i] = newCustomer;
-            } else {
-                newCustomers[i] = customers[i - 1];
+    //Xóa khách thuê phòng
+    public void removeHotel(int index){
+        hotels.remove(index);
+    }
+    //cập nhật thông tin khách hàng
+    public void updateHotel(int index, Hotel newHotel){
+        hotels.set(index,newHotel);
+    }
+    //tìm thông tin của khách theo CMND
+    public int findIndentityCustomer(String indentity){
+        int index = -1;
+        for (int i = 0; i < hotels.size(); i++) {
+            if (hotels.get(i).getPerson().getindentity().equals(indentity)){
+                index = i;
             }
         }
-        customers = newCustomers;
+        return index;
     }
-
-    public void removeCustomer(int index) {
-        Hotel[] newCustomers = new Hotel[customers.length - 1];
-        for (int i = 0; i < newCustomers.length; i++) {
-            if (i < index) {
-                newCustomers[i] = customers[i];
-            } else {
-                newCustomers[i] = customers[i + 1];
-            }
-        }
-        customers = newCustomers;
-    }
-
-    public void updateCustomer(int index, Hotel newCustomer) {
-        this.customers[index] = newCustomer;
-    }
-
-    public double payMoney(String cmnd) {
-        double money = 0;
-        for (int i = 0; i < customers.length; i++) {
-            if (customers[i].getPerson().getindentity().equals(cmnd)) {
-                money = money + customers[i].getPrice() * customers[i].getRentsDay();
-            }
-        }
-        return money;
+    //tính tiền cho khách
+    public double payMoney(String indentity){
+        int index = findIndentityCustomer(indentity);
+        return hotels.get(index).getPrice() * hotels.get(index).getRentsDay();
     }
 }
 

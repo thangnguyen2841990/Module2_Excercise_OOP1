@@ -18,18 +18,22 @@ public class Main {
             switch (choice) {
                 case 1: {
                     System.out.println("----Hiển thị thông tin khách thuê phòng");
-                    hotelManagement.displayAllCustomer();
+                    hotelManagement.displayAllHotels();
+                    if (hotelManagement.getHotels().size()==0){
+                        System.out.println("Không có khách hàng nào để hiển thị!");
+                    }
                     break;
                 }
                 case 2: {
                     System.out.println("----Thêm khách thuê phòng----");
                     System.out.println("Nhập vị trí muốn thêm: ");
                     int index = scanner.nextInt();
-                    if ((index - 1) < 0 || (index - 1) > hotelManagement.customers.length) {
+                    if ((index - 1) < 0 || (index - 1) > hotelManagement.getHotels().size()) {
                         System.out.println("Vị trí không hợp lệ");
                     } else {
-                        Hotel newPerson = inputPerson();
-                        hotelManagement.addNewCustomer(index - 1, newPerson);
+                        Hotel newHotel = inputNewHotel();
+                        hotelManagement.addNewHotel(newHotel);
+                        System.out.println("Đã thêm khách thành công!");
                     }
                     break;
                 }
@@ -37,10 +41,11 @@ public class Main {
                     System.out.println("----Xóa khách thuê phòng----");
                     System.out.println("Nhập vị trí muốn xóa: ");
                     int index = scanner.nextInt();
-                    if (index < 0 || index >= hotelManagement.customers.length) {
+                    if ((index - 1) < 0 || (index - 1) > hotelManagement.getHotels().size()) {
                         System.out.println("Vị trí không hợp lệ");
                     } else {
-                        hotelManagement.removeCustomer(index - 1);
+                        hotelManagement.removeHotel(index-1);
+                        System.out.println("Đã xóa khách thành công!");
                     }
                     break;
                 }
@@ -48,17 +53,41 @@ public class Main {
                     System.out.println("----Cập nhật thông tin khách hàng----");
                     System.out.println("Nhập vị trí muốn cập nhật: ");
                     int index = scanner.nextInt();
-                    Hotel newCustomer = inputPerson();
-                    hotelManagement.updateCustomer(index - 1, newCustomer);
+                    if ((index - 1) < 0 || (index - 1) > hotelManagement.getHotels().size()) {
+                        System.out.println("Vị trí không hợp lệ");
+                    } else {
+                        Hotel newHotel = inputNewHotel();
+                        hotelManagement.updateHotel(index-1, newHotel);
+                        System.out.println("Đã cập nhật thôn tin khách thành công!");
+                    }
                     break;
                 }
                 case 5: {
-                    System.out.println("----Tính tiền cho khách----");
-                    scanner.nextLine();
+                    System.out.println("----Tìm thông tin khách hàng qua CMND----");
                     System.out.println("Nhập CMND của khách: ");
-                    String cmnd = scanner.nextLine();
-                    double money = hotelManagement.payMoney(cmnd);
-                    System.out.println("Số tiền khách phải trả là: " + money);
+                    scanner.nextLine();
+                    String indentity = scanner.nextLine();
+                    int index = hotelManagement.findIndentityCustomer(indentity);
+                    if (index == -1){
+                        System.out.println("Không tìm thấy khách có CMND: "+ indentity);
+                    } else {
+                        System.out.println(hotelManagement.getHotels().get(index));
+                    }
+                    break;
+                }
+                case 6: {
+                    System.out.println("----Tính tiền cho khách----");
+                    System.out.println("Nhập CMND của khách: ");
+                    scanner.nextLine();
+                    String indentity = scanner.nextLine();
+                    int index = hotelManagement.findIndentityCustomer(indentity);
+                    if (index == -1){
+                        System.out.println("Không tìm thấy khách có CMND: "+ indentity);
+                    } else {
+                        double payMoney = hotelManagement.payMoney(indentity);
+                        System.out.println("Số tiền khách phải trả là: "+ payMoney+"(VND)");
+                    }
+
                     break;
                 }
             }
@@ -72,13 +101,14 @@ public class Main {
         System.out.println("2. Thêm khách thuê phòng ");
         System.out.println("3. Xóa khách thuê phòng ");
         System.out.println("4. Cập nhật thông tin khách hàng");
-        System.out.println("5. Tính tiền cho khách. ");
-        System.out.println("6. Thoát. ");
+        System.out.println("5. Tìm thông tin khách hàng qua CMND");
+        System.out.println("6. Tính tiền cho khách. ");
+        System.out.println("7. Thoát. ");
 
     }
 
 
-    public static Hotel inputPerson() {
+    public static Hotel inputNewHotel() {
         scanner.nextLine();
         System.out.println("Nhập họ và tên của khách: ");
         String newName = scanner.nextLine();
